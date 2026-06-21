@@ -1,0 +1,37 @@
+{
+  "name": "ProjectIroncladOfficeClicker",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "IRONCLAD": {
+        "$path": "src/ReplicatedStorage/IRONCLAD"
+      }
+    },
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "IRONCLAD": {
+        "$path": "src/ServerScriptService/IRONCLAD"
+      }
+    },
+
+    "StarterGui": {
+      "$className": "StarterGui",
+      "MainUI": {
+        "$path": "src/StarterGui/MainUI"
+      }
+    },
+
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "ClientInit": {
+          "$path": "src/StarterPlayer/StarterPlayerScripts/ClientInit.client.lua"
+        }
+      }
+    }
+  }
+}
