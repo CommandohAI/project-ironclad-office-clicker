@@ -255,7 +255,108 @@ closeButton.Font = Enum.Font.GothamBold
 closeButton.TextScaled = true
 closeButton.Parent = promotionsModal
 
+-- Hiring panel UI
+local hiringPanel = Instance.new("Frame")
+hiringPanel.Name = "HiringPanel"
+hiringPanel.AnchorPoint = Vector2.new(0.5, 0.5)
+hiringPanel.Position = UDim2.fromScale(0.5, 0.5)
+hiringPanel.Size = UDim2.fromScale(0.5, 0.5)
+hiringPanel.BackgroundColor3 = Color3.fromRGB(28, 28, 33)
+hiringPanel.Visible = false
+hiringPanel.Parent = background
+
+local hiringHeader = Instance.new("TextLabel")
+hiringHeader.Name = "Header"
+hiringHeader.Size = UDim2.fromScale(1, 0.12)
+hiringHeader.Position = UDim2.fromScale(0, 0)
+hiringHeader.BackgroundTransparency = 1
+hiringHeader.Text = "Hiring"
+hiringHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+hiringHeader.Font = Enum.Font.GothamBold
+hiringHeader.TextScaled = true
+hiringHeader.Parent = hiringPanel
+
+local workerName = Instance.new("TextLabel")
+workerName.Name = "WorkerNameLabel"
+workerName.Size = UDim2.fromScale(0.9, 0.12)
+workerName.Position = UDim2.fromScale(0.05, 0.14)
+workerName.BackgroundTransparency = 1
+workerName.Text = "Junior Worker"
+workerName.TextColor3 = Color3.fromRGB(240, 240, 240)
+workerName.Font = Enum.Font.GothamBold
+workerName.TextScaled = true
+workerName.Parent = hiringPanel
+
+local workerCount = Instance.new("TextLabel")
+workerCount.Name = "WorkerCountLabel"
+workerCount.Size = UDim2.fromScale(0.9, 0.1)
+workerCount.Position = UDim2.fromScale(0.05, 0.28)
+workerCount.BackgroundTransparency = 1
+workerCount.Text = "Owned: 0"
+workerCount.TextColor3 = Color3.fromRGB(200, 200, 200)
+workerCount.Font = Enum.Font.Gotham
+workerCount.TextScaled = true
+workerCount.Parent = hiringPanel
+
+local workerCost = Instance.new("TextLabel")
+workerCost.Name = "WorkerCostLabel"
+workerCost.Size = UDim2.fromScale(0.9, 0.1)
+workerCost.Position = UDim2.fromScale(0.05, 0.40)
+workerCost.BackgroundTransparency = 1
+workerCost.Text = "Cost: £0"
+workerCost.TextColor3 = Color3.fromRGB(200, 200, 200)
+workerCost.Font = Enum.Font.Gotham
+workerCost.TextScaled = true
+workerCost.Parent = hiringPanel
+
+local workerIncome = Instance.new("TextLabel")
+workerIncome.Name = "WorkerIncomeLabel"
+workerIncome.Size = UDim2.fromScale(0.9, 0.2)
+workerIncome.Position = UDim2.fromScale(0.05, 0.52)
+workerIncome.BackgroundTransparency = 1
+workerIncome.Text = "Income: £0 / worker\nTotal: £0 / sec"
+workerIncome.TextColor3 = Color3.fromRGB(200, 200, 200)
+workerIncome.Font = Enum.Font.Gotham
+workerIncome.TextScaled = true
+workerIncome.TextWrapped = true
+workerIncome.Parent = hiringPanel
+
+local buyWorkerButton = Instance.new("TextButton")
+buyWorkerButton.Name = "BuyWorkerButton"
+buyWorkerButton.Size = UDim2.fromScale(0.3, 0.12)
+buyWorkerButton.Position = UDim2.fromScale(0.35, 0.76)
+buyWorkerButton.BackgroundColor3 = Color3.fromRGB(60, 120, 60)
+buyWorkerButton.Text = "Hire"
+buyWorkerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+buyWorkerButton.Font = Enum.Font.GothamBold
+buyWorkerButton.TextScaled = true
+buyWorkerButton.Parent = hiringPanel
+
+local affordabilityLabel = Instance.new("TextLabel")
+affordabilityLabel.Name = "AffordabilityLabel"
+affordabilityLabel.Size = UDim2.fromScale(0.9, 0.12)
+affordabilityLabel.Position = UDim2.fromScale(0.05, 0.88)
+affordabilityLabel.BackgroundTransparency = 1
+affordabilityLabel.Text = ""
+affordabilityLabel.TextColor3 = Color3.fromRGB(220, 80, 80)
+affordabilityLabel.Font = Enum.Font.Gotham
+affordabilityLabel.TextScaled = true
+affordabilityLabel.Parent = hiringPanel
+
+local hiringClose = Instance.new("TextButton")
+hiringClose.Name = "HiringClose"
+hiringClose.Size = UDim2.fromScale(0.08, 0.08)
+hiringClose.Position = UDim2.fromScale(0.92, 0.02)
+hiringClose.AnchorPoint = Vector2.new(1, 0)
+hiringClose.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+hiringClose.Text = "X"
+hiringClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+hiringClose.Font = Enum.Font.GothamBold
+hiringClose.TextScaled = true
+hiringClose.Parent = hiringPanel
+
 local PromotionsController = require(script.Parent.UIControllers.PromotionsController)
+local HiringController = require(script.Parent.UIControllers.HiringController)
 
 PromotionsController.Init({
     PromotionsButton = promotionButton,
@@ -268,4 +369,16 @@ PromotionsController.Init({
     PurchaseButton = purchaseButton,
     InsufficientLabel = insufficientLabel,
     CloseButton = closeButton,
+})
+
+HiringController.Init({
+    HiringButton = hiringButton,
+    HiringPanel = hiringPanel,
+    WorkerNameLabel = workerName,
+    WorkerCountLabel = workerCount,
+    WorkerCostLabel = workerCost,
+    WorkerIncomeLabel = workerIncome,
+    BuyWorkerButton = buyWorkerButton,
+    AffordabilityLabel = affordabilityLabel,
+    CloseButton = hiringClose,
 })

@@ -8,6 +8,7 @@ local DEFAULT_DATA = {
     Money = 0,
     WorkPower = 1,
     PromotionLevel = 0,
+    WorkerCount = 0,
 }
 
 local function createLeaderstats(player, data)
@@ -35,6 +36,7 @@ function PlayerDataService.InitPlayer(player)
         Money = DEFAULT_DATA.Money,
         WorkPower = DEFAULT_DATA.WorkPower,
         PromotionLevel = DEFAULT_DATA.PromotionLevel,
+        WorkerCount = DEFAULT_DATA.WorkerCount,
     }
 
     profiles[player.UserId] = data
