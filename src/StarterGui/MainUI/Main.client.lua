@@ -233,7 +233,7 @@ local quickActionsFrame = Instance.new("Frame")
 quickActionsFrame.Name = "QuickActionsFrame"
 quickActionsFrame.AnchorPoint = Vector2.new(0, 0)
 quickActionsFrame.Position = UDim2.fromScale(0.04, 0.67)
-quickActionsFrame.Size = UDim2.fromScale(0.28, 0.26)
+quickActionsFrame.Size = UDim2.fromScale(0.28, 0.34)
 quickActionsFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 36)
 quickActionsFrame.BorderSizePixel = 0
 quickActionsFrame.Parent = background
@@ -262,7 +262,7 @@ quickHeader.Parent = quickActionsFrame
 local promotionButton = Instance.new("TextButton")
 promotionButton.Name = "PromotionsButton"
 promotionButton.AnchorPoint = Vector2.new(0, 0)
-promotionButton.Position = UDim2.fromScale(0.05, 0.20)
+promotionButton.Position = UDim2.fromScale(0.05, 0.12)
 promotionButton.Size = UDim2.fromScale(0.9, 0.18)
 promotionButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 promotionButton.BorderSizePixel = 0
@@ -279,7 +279,7 @@ promotionCorner.Parent = promotionButton
 local hiringButton = Instance.new("TextButton")
 hiringButton.Name = "HiringButton"
 hiringButton.AnchorPoint = Vector2.new(0, 0)
-hiringButton.Position = UDim2.fromScale(0.05, 0.44)
+hiringButton.Position = UDim2.fromScale(0.05, 0.34)
 hiringButton.Size = UDim2.fromScale(0.9, 0.18)
 hiringButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 hiringButton.BorderSizePixel = 0
@@ -296,7 +296,7 @@ hiringCorner.Parent = hiringButton
 local rebirthButton = Instance.new("TextButton")
 rebirthButton.Name = "RebirthToggleButton"
 rebirthButton.AnchorPoint = Vector2.new(0, 0)
-rebirthButton.Position = UDim2.fromScale(0.05, 0.68)
+rebirthButton.Position = UDim2.fromScale(0.05, 0.56)
 rebirthButton.Size = UDim2.fromScale(0.9, 0.18)
 rebirthButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 rebirthButton.BorderSizePixel = 0
@@ -309,6 +309,23 @@ rebirthButton.Parent = quickActionsFrame
 local rebirthCorner = Instance.new("UICorner")
 rebirthCorner.CornerRadius = UDim.new(0, 12)
 rebirthCorner.Parent = rebirthButton
+
+local shopButton = Instance.new("TextButton")
+shopButton.Name = "ShopButton"
+shopButton.AnchorPoint = Vector2.new(0, 0)
+shopButton.Position = UDim2.fromScale(0.05, 0.78)
+shopButton.Size = UDim2.fromScale(0.9, 0.18)
+shopButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
+shopButton.BorderSizePixel = 0
+shopButton.Text = "Store"
+shopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+shopButton.Font = Enum.Font.GothamBold
+shopButton.TextScaled = true
+shopButton.Parent = quickActionsFrame
+
+local shopCorner = Instance.new("UICorner")
+shopCorner.CornerRadius = UDim.new(0, 12)
+shopCorner.Parent = shopButton
 
 WorkController.Init({
     WorkButton = workButton,
@@ -621,9 +638,85 @@ rebirthClose.Font = Enum.Font.GothamBold
 rebirthClose.TextScaled = true
 rebirthClose.Parent = rebirthPanel
 
+local shopPanel = Instance.new("Frame")
+shopPanel.Name = "ShopPanel"
+shopPanel.AnchorPoint = Vector2.new(0.5, 0.5)
+shopPanel.Position = UDim2.fromScale(0.5, 0.5)
+shopPanel.Size = UDim2.fromScale(0.55, 0.55)
+shopPanel.BackgroundColor3 = Color3.fromRGB(28, 28, 33)
+shopPanel.BorderSizePixel = 0
+shopPanel.Visible = false
+shopPanel.Parent = background
+
+local shopHeader = Instance.new("TextLabel")
+shopHeader.Name = "Header"
+shopHeader.Size = UDim2.fromScale(1, 0.12)
+shopHeader.Position = UDim2.fromScale(0, 0)
+shopHeader.BackgroundTransparency = 1
+shopHeader.Text = "Store"
+shopHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+shopHeader.Font = Enum.Font.GothamBold
+shopHeader.TextScaled = true
+shopHeader.Parent = shopPanel
+
+local shopStatusLabel = Instance.new("TextLabel")
+shopStatusLabel.Name = "ShopStatusLabel"
+shopStatusLabel.Size = UDim2.fromScale(0.96, 0.08)
+shopStatusLabel.Position = UDim2.fromScale(0.02, 0.88)
+shopStatusLabel.BackgroundTransparency = 1
+shopStatusLabel.Text = "Support development with optional boosts."
+shopStatusLabel.TextColor3 = Color3.fromRGB(185, 185, 185)
+shopStatusLabel.Font = Enum.Font.Gotham
+shopStatusLabel.TextScaled = true
+shopStatusLabel.TextWrapped = true
+shopStatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+shopStatusLabel.Parent = shopPanel
+
+local shopContent = Instance.new("Frame")
+shopContent.Name = "ShopContent"
+shopContent.Size = UDim2.fromScale(0.96, 0.76)
+shopContent.Position = UDim2.fromScale(0.02, 0.14)
+shopContent.BackgroundTransparency = 1
+shopContent.Parent = shopPanel
+
+local shopProductList = Instance.new("ScrollingFrame")
+shopProductList.Name = "ShopProductList"
+shopProductList.Size = UDim2.fromScale(1, 1)
+shopProductList.BackgroundTransparency = 1
+shopProductList.CanvasSize = UDim2.new(0, 0, 0, 0)
+shopProductList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+shopProductList.ScrollBarThickness = 6
+shopProductList.Parent = shopContent
+
+local shopPadding = Instance.new("UIPadding")
+shopPadding.PaddingTop = UDim.new(0, 12)
+shopPadding.PaddingBottom = UDim.new(0, 12)
+shopPadding.PaddingLeft = UDim.new(0, 10)
+shopPadding.PaddingRight = UDim.new(0, 10)
+shopPadding.Parent = shopProductList
+
+local shopListLayout = Instance.new("UIListLayout")
+shopListLayout.Name = "ListLayout"
+shopListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+shopListLayout.Padding = UDim.new(0, 14)
+shopListLayout.Parent = shopProductList
+
+local shopClose = Instance.new("TextButton")
+shopClose.Name = "ShopClose"
+shopClose.Size = UDim2.fromScale(0.08, 0.08)
+shopClose.Position = UDim2.fromScale(0.92, 0.02)
+shopClose.AnchorPoint = Vector2.new(1, 0)
+shopClose.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+shopClose.Text = "X"
+shopClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+shopClose.Font = Enum.Font.GothamBold
+shopClose.TextScaled = true
+shopClose.Parent = shopPanel
+
 local PromotionsController = require(script.Parent.UIControllers.PromotionsController)
 local HiringController = require(script.Parent.UIControllers.HiringController)
 local RebirthController = require(script.Parent.UIControllers.RebirthController)
+local ShopController = require(script.Parent.UIControllers.ShopController)
 
 PromotionsController.Init({
     PromotionsButton = promotionButton,
@@ -661,4 +754,12 @@ RebirthController.Init({
     RebirthStatusLabel = rebirthStatusLabel,
     RebirthButton = rebirthConfirmButton,
     CloseButton = rebirthClose,
+})
+
+ShopController.Init({
+    ShopButton = shopButton,
+    ShopPanel = shopPanel,
+    ShopStatusLabel = shopStatusLabel,
+    ShopProductList = shopProductList,
+    CloseButton = shopClose,
 })

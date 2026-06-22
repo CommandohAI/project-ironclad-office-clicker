@@ -10,6 +10,9 @@ local SignalNames = {
     RequestRebirth = "RequestRebirth",
     GetPlayerRebirthData = "GetPlayerRebirthData",
     RebirthPerformed = "RebirthPerformed",
+    RequestPurchaseProduct = "RequestPurchaseProduct",
+    GetStoreData = "GetStoreData",
+    PurchaseCompleted = "PurchaseCompleted",
 }
 
 return SignalNames
