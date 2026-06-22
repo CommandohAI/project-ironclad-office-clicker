@@ -92,12 +92,14 @@ function PromotionService.Start()
         local nextLevel = currentLevel + 1
         local nextCost = round(PromotionsConfig.baseCost * (PromotionsConfig.scaleFactor ^ (nextLevel - 1)))
         local currentMultiplier = PromotionsConfig.multiplierPerLevel ^ currentLevel
+        local prestigeMultiplier = PlayerDataService.GetPrestigeMultiplier(player)
+        local effectivePerClick = round((data.WorkPower or 1) * prestigeMultiplier)
 
         return {
             ownedLevel = currentLevel,
             nextCost = nextCost,
             currentMultiplier = currentMultiplier,
-            currentPerClick = data.WorkPower,
+            currentPerClick = effectivePerClick,
             money = data.Money,
         }
     end

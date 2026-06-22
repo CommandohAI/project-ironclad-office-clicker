@@ -7,6 +7,9 @@ local SignalNames = {
     RequestHireWorker = "RequestHireWorker",
     GetPlayerHiringData = "GetPlayerHiringData",
     HiringDataUpdated = "HiringDataUpdated",
+    RequestRebirth = "RequestRebirth",
+    GetPlayerRebirthData = "GetPlayerRebirthData",
+    RebirthPerformed = "RebirthPerformed",
 }
 
 return SignalNames

@@ -57,7 +57,8 @@ local function sendHiringData(player)
 
     local workerCount = data.WorkerCount or 0
     local currentCost = getCurrentWorkerCost(workerCount)
-    local totalIncome = workerCount * HiringConfig.workerIncomePerSecond
+    local multiplier = PlayerDataService.GetPrestigeMultiplier(player)
+    local totalIncome = round(workerCount * HiringConfig.workerIncomePerSecond * multiplier)
 
     dataEvent:FireClient(player, {
         workerCount = workerCount,
@@ -84,9 +85,11 @@ local function startPassiveIncome(player)
 
             local currentWorkerCount = currentData.WorkerCount or 0
             if currentWorkerCount > 0 then
-                PlayerDataService.AddMoney(player, currentWorkerCount * HiringConfig.workerIncomePerSecond)
+                local multiplier = PlayerDataService.GetPrestigeMultiplier(player)
+                local income = round(currentWorkerCount * HiringConfig.workerIncomePerSecond * multiplier)
+                PlayerDataService.AddMoney(player, income)
                 if moneyUpdatedRemote then
-                    moneyUpdatedRemote:FireClient(player, currentData.Money, currentData.WorkPower)
+                    moneyUpdatedRemote:FireClient(player, currentData.Money, round((currentData.WorkPower or 1) * multiplier))
                 end
                 sendHiringData(player)
             end

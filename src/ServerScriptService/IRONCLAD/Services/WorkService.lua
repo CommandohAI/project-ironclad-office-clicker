@@ -13,6 +13,10 @@ local CLICK_COOLDOWN = 0.12
 
 local moneyUpdatedRemote
 
+local function round(n)
+    return math.floor(n + 0.5)
+end
+
 local function getOrCreateRemote(name)
     local remotesFolder = Ironclad:FindFirstChild("Remotes")
 
@@ -43,7 +47,10 @@ local function sendMoneyUpdate(player)
         return
     end
 
-    moneyUpdatedRemote:FireClient(player, data.Money, data.WorkPower)
+    local multiplier = PlayerDataService.GetPrestigeMultiplier(player)
+    local effectivePower = round((data.WorkPower or 1) * multiplier)
+
+    moneyUpdatedRemote:FireClient(player, data.Money, effectivePower)
 end
 
 function WorkService.Start()
@@ -67,7 +74,8 @@ function WorkService.Start()
             data = PlayerDataService.GetData(player)
         end
 
-        local earned = data.WorkPower or 1
+        local multiplier = PlayerDataService.GetPrestigeMultiplier(player)
+        local earned = round((data.WorkPower or 1) * multiplier)
         local newMoney = PlayerDataService.AddMoney(player, earned)
 
         moneyUpdatedRemote:FireClient(player, newMoney, earned)

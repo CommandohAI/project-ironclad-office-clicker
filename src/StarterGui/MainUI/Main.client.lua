@@ -121,6 +121,23 @@ local hiringCorner = Instance.new("UICorner")
 hiringCorner.CornerRadius = UDim.new(0.18, 0)
 hiringCorner.Parent = hiringButton
 
+local rebirthButton = Instance.new("TextButton")
+rebirthButton.Name = "RebirthToggleButton"
+rebirthButton.AnchorPoint = Vector2.new(0, 0.5)
+rebirthButton.Position = UDim2.fromScale(0.08, 0.67)
+rebirthButton.Size = UDim2.fromScale(0.16, 0.07)
+rebirthButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
+rebirthButton.BorderSizePixel = 0
+rebirthButton.Text = "Rebirth"
+rebirthButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+rebirthButton.Font = Enum.Font.GothamBold
+rebirthButton.TextScaled = true
+rebirthButton.Parent = background
+
+local rebirthCorner = Instance.new("UICorner")
+rebirthCorner.CornerRadius = UDim.new(0.18, 0)
+rebirthCorner.Parent = rebirthButton
+
 WorkController.Init({
     WorkButton = workButton,
     MoneyLabel = moneyLabel,
@@ -355,8 +372,86 @@ hiringClose.Font = Enum.Font.GothamBold
 hiringClose.TextScaled = true
 hiringClose.Parent = hiringPanel
 
+local rebirthPanel = Instance.new("Frame")
+rebirthPanel.Name = "RebirthPanel"
+rebirthPanel.AnchorPoint = Vector2.new(0.5, 0.5)
+rebirthPanel.Position = UDim2.fromScale(0.5, 0.5)
+rebirthPanel.Size = UDim2.fromScale(0.4, 0.35)
+rebirthPanel.BackgroundColor3 = Color3.fromRGB(28, 28, 33)
+rebirthPanel.Visible = false
+rebirthPanel.Parent = background
+
+local rebirthHeader = Instance.new("TextLabel")
+rebirthHeader.Name = "Header"
+rebirthHeader.Size = UDim2.fromScale(1, 0.12)
+rebirthHeader.Position = UDim2.fromScale(0, 0)
+rebirthHeader.BackgroundTransparency = 1
+rebirthHeader.Text = "Rebirth"
+rebirthHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+rebirthHeader.Font = Enum.Font.GothamBold
+rebirthHeader.TextScaled = true
+rebirthHeader.Parent = rebirthPanel
+
+local prestigeLabel = Instance.new("TextLabel")
+prestigeLabel.Name = "PrestigeLabel"
+prestigeLabel.Size = UDim2.fromScale(0.9, 0.12)
+prestigeLabel.Position = UDim2.fromScale(0.05, 0.14)
+prestigeLabel.BackgroundTransparency = 1
+prestigeLabel.Text = "Prestige: 0"
+prestigeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+prestigeLabel.Font = Enum.Font.Gotham
+prestigeLabel.TextScaled = true
+prestigeLabel.Parent = rebirthPanel
+
+local requirementLabel = Instance.new("TextLabel")
+requirementLabel.Name = "RequirementLabel"
+requirementLabel.Size = UDim2.fromScale(0.9, 0.12)
+requirementLabel.Position = UDim2.fromScale(0.05, 0.28)
+requirementLabel.BackgroundTransparency = 1
+requirementLabel.Text = "Rebirth requires L0 money"
+requirementLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+requirementLabel.Font = Enum.Font.Gotham
+requirementLabel.TextScaled = true
+requirementLabel.Parent = rebirthPanel
+
+local descriptionLabel = Instance.new("TextLabel")
+descriptionLabel.Name = "DescriptionLabel"
+descriptionLabel.Size = UDim2.fromScale(0.9, 0.12)
+descriptionLabel.Position = UDim2.fromScale(0.05, 0.42)
+descriptionLabel.BackgroundTransparency = 1
+descriptionLabel.Text = "+1% earnings per Prestige point"
+descriptionLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+descriptionLabel.Font = Enum.Font.Gotham
+descriptionLabel.TextScaled = true
+descriptionLabel.Parent = rebirthPanel
+
+local rebirthConfirmButton = Instance.new("TextButton")
+rebirthConfirmButton.Name = "RebirthButton"
+rebirthConfirmButton.Size = UDim2.fromScale(0.4, 0.16)
+rebirthConfirmButton.Position = UDim2.fromScale(0.3, 0.6)
+rebirthConfirmButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+rebirthConfirmButton.BorderSizePixel = 0
+rebirthConfirmButton.Text = "Rebirth"
+rebirthConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+rebirthConfirmButton.Font = Enum.Font.GothamBold
+rebirthConfirmButton.TextScaled = true
+rebirthConfirmButton.Parent = rebirthPanel
+
+local rebirthClose = Instance.new("TextButton")
+rebirthClose.Name = "RebirthClose"
+rebirthClose.Size = UDim2.fromScale(0.08, 0.08)
+rebirthClose.Position = UDim2.fromScale(0.92, 0.02)
+rebirthClose.AnchorPoint = Vector2.new(1, 0)
+rebirthClose.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+rebirthClose.Text = "X"
+rebirthClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+rebirthClose.Font = Enum.Font.GothamBold
+rebirthClose.TextScaled = true
+rebirthClose.Parent = rebirthPanel
+
 local PromotionsController = require(script.Parent.UIControllers.PromotionsController)
 local HiringController = require(script.Parent.UIControllers.HiringController)
+local RebirthController = require(script.Parent.UIControllers.RebirthController)
 
 PromotionsController.Init({
     PromotionsButton = promotionButton,
@@ -381,4 +476,14 @@ HiringController.Init({
     BuyWorkerButton = buyWorkerButton,
     AffordabilityLabel = affordabilityLabel,
     CloseButton = hiringClose,
+})
+
+RebirthController.Init({
+    RebirthToggleButton = rebirthButton,
+    RebirthPanel = rebirthPanel,
+    PrestigeLabel = prestigeLabel,
+    RequirementLabel = requirementLabel,
+    DescriptionLabel = descriptionLabel,
+    RebirthButton = rebirthConfirmButton,
+    CloseButton = rebirthClose,
 })
