@@ -19,12 +19,17 @@ function HiringController.Init(ui)
     local workerCountLabel = ui.WorkerCountLabel
     local workerCostLabel = ui.WorkerCostLabel
     local workerIncomeLabel = ui.WorkerIncomeLabel
+    local passiveIncomeLabel = ui.PassiveIncomeLabel
     local buyWorkerButton = ui.BuyWorkerButton
     local affordabilityLabel = ui.AffordabilityLabel
     local closeButton = ui.CloseButton
 
     hiringPanel.Visible = false
     affordabilityLabel.Visible = false
+
+    if passiveIncomeLabel then
+        passiveIncomeLabel.Text = "Passive: " .. NumberFormatter.FormatMoney(0) .. " / sec"
+    end
 
     local function refreshData()
         local ok, data = pcall(function()
@@ -39,6 +44,9 @@ function HiringController.Init(ui)
         workerCountLabel.Text = "Owned: " .. tostring(data.workerCount)
         workerCostLabel.Text = "Cost: " .. NumberFormatter.FormatMoney(data.nextCost)
         workerIncomeLabel.Text = "Income: " .. NumberFormatter.FormatMoney(data.incomePerSecond) .. " / worker" .. "\nTotal: " .. NumberFormatter.FormatMoney(data.totalIncomePerSecond) .. " / sec"
+        if passiveIncomeLabel then
+            passiveIncomeLabel.Text = "Passive: " .. NumberFormatter.FormatMoney(data.totalIncomePerSecond or 0) .. " / sec"
+        end
 
         if data.money >= data.nextCost then
             buyWorkerButton.Active = true
@@ -84,6 +92,9 @@ function HiringController.Init(ui)
             workerCountLabel.Text = "Owned: " .. tostring(result.workerCount)
             workerCostLabel.Text = "Cost: " .. NumberFormatter.FormatMoney(result.nextCost)
             workerIncomeLabel.Text = "Income: " .. NumberFormatter.FormatMoney(result.incomePerSecond) .. " / worker" .. "\nTotal: " .. NumberFormatter.FormatMoney(result.totalIncomePerSecond) .. " / sec"
+            if passiveIncomeLabel then
+                passiveIncomeLabel.Text = "Passive: " .. NumberFormatter.FormatMoney(result.totalIncomePerSecond or 0) .. " / sec"
+            end
             affordabilityLabel.Visible = false
 
             local flash = TweenService:Create(workerCountLabel, TweenInfo.new(0.15), { TextColor3 = Color3.fromRGB(100, 255, 100) })
@@ -101,6 +112,9 @@ function HiringController.Init(ui)
         workerCountLabel.Text = "Owned: " .. tostring(payload.workerCount)
         workerCostLabel.Text = "Cost: " .. NumberFormatter.FormatMoney(payload.nextCost)
         workerIncomeLabel.Text = "Income: " .. NumberFormatter.FormatMoney(payload.incomePerSecond) .. " / worker" .. "\nTotal: " .. NumberFormatter.FormatMoney(payload.totalIncomePerSecond) .. " / sec"
+        if passiveIncomeLabel then
+            passiveIncomeLabel.Text = "Passive: " .. NumberFormatter.FormatMoney(payload.totalIncomePerSecond or 0) .. " / sec"
+        end
     end)
 end
 

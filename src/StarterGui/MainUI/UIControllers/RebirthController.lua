@@ -19,6 +19,8 @@ function RebirthController.Init(ui)
     local requirementLabel = ui.RequirementLabel
     local descriptionLabel = ui.DescriptionLabel
     local rebirthButton = ui.RebirthButton
+    local prestigeStatusLabel = ui.PrestigeStatusLabel
+    local rebirthStatusLabel = ui.RebirthStatusLabel
     local rebirthClose = ui.CloseButton
 
     local currentRequirement = 0
@@ -50,8 +52,21 @@ function RebirthController.Init(ui)
         currentRequirement = data.nextRequirement or 0
         currentMoney = data.currentMoney or 0
 
-        prestigeLabel.Text = "Prestige: " .. tostring(data.prestige or 0)
+        local prestigeValue = tostring(data.prestige or 0)
+        prestigeLabel.Text = "Prestige: " .. prestigeValue
+        if prestigeStatusLabel then
+            prestigeStatusLabel.Text = "Prestige: " .. prestigeValue
+        end
         requirementLabel.Text = "Rebirth requires " .. NumberFormatter.FormatMoney(currentRequirement) .. " money"
+        if rebirthStatusLabel then
+            if currentMoney >= currentRequirement and currentRequirement > 0 then
+                rebirthStatusLabel.Text = "Rebirth: Available"
+                rebirthStatusLabel.TextColor3 = Color3.fromRGB(120, 220, 120)
+            else
+                rebirthStatusLabel.Text = "Rebirth: Locked"
+                rebirthStatusLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+            end
+        end
         descriptionLabel.Text = "+" .. tostring(math.floor((data.prestigeBonusPercent or 0) * 100)) .. "% earnings per Prestige point"
 
         updateButtonState()
@@ -90,8 +105,16 @@ function RebirthController.Init(ui)
         if result.success then
             currentRequirement = result.nextRequirement or currentRequirement
             currentMoney = result.currentMoney or 0
-            prestigeLabel.Text = "Prestige: " .. tostring(result.prestige or 0)
+            local prestigeValue = tostring(result.prestige or 0)
+            prestigeLabel.Text = "Prestige: " .. prestigeValue
+            if prestigeStatusLabel then
+                prestigeStatusLabel.Text = "Prestige: " .. prestigeValue
+            end
             requirementLabel.Text = "Rebirth requires " .. NumberFormatter.FormatMoney(currentRequirement) .. " money"
+            if rebirthStatusLabel then
+                rebirthStatusLabel.Text = "Rebirth: Locked"
+                rebirthStatusLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+            end
             rebirthButton.Active = false
             rebirthButton.AutoButtonColor = false
             rebirthButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
@@ -104,6 +127,15 @@ function RebirthController.Init(ui)
     moneyUpdatedRemote.OnClientEvent:Connect(function(money)
         currentMoney = money or 0
         updateButtonState()
+        if rebirthStatusLabel then
+            if currentMoney >= currentRequirement and currentRequirement > 0 then
+                rebirthStatusLabel.Text = "Rebirth: Available"
+                rebirthStatusLabel.TextColor3 = Color3.fromRGB(120, 220, 120)
+            else
+                rebirthStatusLabel.Text = "Rebirth: Locked"
+                rebirthStatusLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+            end
+        end
     end)
 end
 

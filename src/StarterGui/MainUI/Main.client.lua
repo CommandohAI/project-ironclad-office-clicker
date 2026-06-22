@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
 
 local localPlayer = Players.LocalPlayer
 local playerGui = localPlayer:WaitForChild("PlayerGui")
@@ -22,120 +23,291 @@ background.BackgroundColor3 = Color3.fromRGB(18, 19, 24)
 background.BorderSizePixel = 0
 background.Parent = screenGui
 
+local headerFrame = Instance.new("Frame")
+headerFrame.Name = "HeaderFrame"
+headerFrame.AnchorPoint = Vector2.new(0.5, 0)
+headerFrame.Position = UDim2.fromScale(0.5, 0.03)
+headerFrame.Size = UDim2.new(0.92, 0, 0.14, 0)
+headerFrame.BackgroundColor3 = Color3.fromRGB(24, 24, 32)
+headerFrame.BorderSizePixel = 0
+headerFrame.Parent = background
+
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 16)
+headerCorner.Parent = headerFrame
+
 local title = Instance.new("TextLabel")
 title.Name = "Title"
-title.AnchorPoint = Vector2.new(0.5, 0)
-title.Position = UDim2.fromScale(0.5, 0.08)
-title.Size = UDim2.fromScale(0.7, 0.08)
+title.AnchorPoint = Vector2.new(0, 0)
+title.Position = UDim2.fromScale(0.04, 0.10)
+title.Size = UDim2.fromScale(0.55, 0.5)
 title.BackgroundTransparency = 1
 title.Text = "PROJECT IRONCLAD"
 title.TextColor3 = Color3.fromRGB(235, 235, 235)
 title.Font = Enum.Font.GothamBlack
 title.TextScaled = true
-title.Parent = background
+title.Parent = headerFrame
 
 local subtitle = Instance.new("TextLabel")
 subtitle.Name = "Subtitle"
-subtitle.AnchorPoint = Vector2.new(0.5, 0)
-subtitle.Position = UDim2.fromScale(0.5, 0.16)
-subtitle.Size = UDim2.fromScale(0.7, 0.045)
+subtitle.AnchorPoint = Vector2.new(0, 0)
+subtitle.Position = UDim2.fromScale(0.04, 0.58)
+subtitle.Size = UDim2.fromScale(0.75, 0.28)
 subtitle.BackgroundTransparency = 1
 subtitle.Text = "Office Clicker / Corporate Climb Simulator"
 subtitle.TextColor3 = Color3.fromRGB(170, 170, 170)
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextScaled = true
-subtitle.Parent = background
+subtitle.Parent = headerFrame
+
+local statsFrame = Instance.new("Frame")
+statsFrame.Name = "StatsFrame"
+statsFrame.AnchorPoint = Vector2.new(0, 0)
+statsFrame.Position = UDim2.fromScale(0.04, 0.20)
+statsFrame.Size = UDim2.fromScale(0.28, 0.44)
+statsFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 36)
+statsFrame.BorderSizePixel = 0
+statsFrame.Parent = background
+
+local statsCorner = Instance.new("UICorner")
+statsCorner.CornerRadius = UDim.new(0, 16)
+statsCorner.Parent = statsFrame
+
+local statsStroke = Instance.new("UIStroke")
+statsStroke.Color = Color3.fromRGB(72, 72, 84)
+statsStroke.Transparency = 0.75
+statsStroke.Parent = statsFrame
+
+local statsHeader = Instance.new("TextLabel")
+statsHeader.Name = "StatsHeader"
+statsHeader.Size = UDim2.fromScale(0.9, 0.14)
+statsHeader.Position = UDim2.fromScale(0.05, 0.03)
+statsHeader.BackgroundTransparency = 1
+statsHeader.Text = "CURRENT STATUS"
+statsHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+statsHeader.Font = Enum.Font.GothamBold
+statsHeader.TextScaled = true
+statsHeader.TextXAlignment = Enum.TextXAlignment.Left
+statsHeader.Parent = statsFrame
 
 local moneyLabel = Instance.new("TextLabel")
 moneyLabel.Name = "MoneyLabel"
-moneyLabel.AnchorPoint = Vector2.new(0.5, 0)
-moneyLabel.Position = UDim2.fromScale(0.5, 0.25)
-moneyLabel.Size = UDim2.fromScale(0.5, 0.08)
+moneyLabel.AnchorPoint = Vector2.new(0, 0)
+moneyLabel.Position = UDim2.fromScale(0.05, 0.18)
+moneyLabel.Size = UDim2.fromScale(0.9, 0.15)
 moneyLabel.BackgroundTransparency = 1
-    moneyLabel.Text = "Money: £0"
+moneyLabel.Text = "Money: £0"
 moneyLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 moneyLabel.Font = Enum.Font.GothamBold
 moneyLabel.TextScaled = true
-moneyLabel.Parent = background
+moneyLabel.TextXAlignment = Enum.TextXAlignment.Left
+moneyLabel.Parent = statsFrame
 
 local workPowerLabel = Instance.new("TextLabel")
 workPowerLabel.Name = "WorkPowerLabel"
-workPowerLabel.AnchorPoint = Vector2.new(0.5, 0)
-workPowerLabel.Position = UDim2.fromScale(0.5, 0.33)
-workPowerLabel.Size = UDim2.fromScale(0.45, 0.045)
+workPowerLabel.AnchorPoint = Vector2.new(0, 0)
+workPowerLabel.Position = UDim2.fromScale(0.05, 0.35)
+workPowerLabel.Size = UDim2.fromScale(0.9, 0.11)
 workPowerLabel.BackgroundTransparency = 1
-    workPowerLabel.Text = "Earns £1 per click"
+workPowerLabel.Text = "Earns £1 per click"
 workPowerLabel.TextColor3 = Color3.fromRGB(185, 185, 185)
 workPowerLabel.Font = Enum.Font.Gotham
 workPowerLabel.TextScaled = true
-workPowerLabel.Parent = background
+workPowerLabel.TextXAlignment = Enum.TextXAlignment.Left
+workPowerLabel.Parent = statsFrame
+
+local passiveIncomeLabel = Instance.new("TextLabel")
+passiveIncomeLabel.Name = "PassiveIncomeLabel"
+passiveIncomeLabel.AnchorPoint = Vector2.new(0, 0)
+passiveIncomeLabel.Position = UDim2.fromScale(0.05, 0.50)
+passiveIncomeLabel.Size = UDim2.fromScale(0.9, 0.11)
+passiveIncomeLabel.BackgroundTransparency = 1
+passiveIncomeLabel.Text = "Passive: £0 / sec"
+passiveIncomeLabel.TextColor3 = Color3.fromRGB(185, 185, 185)
+passiveIncomeLabel.Font = Enum.Font.Gotham
+passiveIncomeLabel.TextScaled = true
+passiveIncomeLabel.TextXAlignment = Enum.TextXAlignment.Left
+passiveIncomeLabel.Parent = statsFrame
+
+local prestigeStatusLabel = Instance.new("TextLabel")
+prestigeStatusLabel.Name = "PrestigeStatusLabel"
+prestigeStatusLabel.AnchorPoint = Vector2.new(0, 0)
+prestigeStatusLabel.Position = UDim2.fromScale(0.05, 0.62)
+prestigeStatusLabel.Size = UDim2.fromScale(0.9, 0.11)
+prestigeStatusLabel.BackgroundTransparency = 1
+prestigeStatusLabel.Text = "Prestige: 0"
+prestigeStatusLabel.TextColor3 = Color3.fromRGB(185, 185, 185)
+prestigeStatusLabel.Font = Enum.Font.Gotham
+prestigeStatusLabel.TextScaled = true
+prestigeStatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+prestigeStatusLabel.Parent = statsFrame
+
+local rebirthStatusLabel = Instance.new("TextLabel")
+rebirthStatusLabel.Name = "RebirthStatusLabel"
+rebirthStatusLabel.AnchorPoint = Vector2.new(0, 0)
+rebirthStatusLabel.Position = UDim2.fromScale(0.05, 0.74)
+rebirthStatusLabel.Size = UDim2.fromScale(0.9, 0.11)
+rebirthStatusLabel.BackgroundTransparency = 1
+rebirthStatusLabel.Text = "Rebirth: Locked"
+rebirthStatusLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+rebirthStatusLabel.Font = Enum.Font.Gotham
+rebirthStatusLabel.TextScaled = true
+rebirthStatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+rebirthStatusLabel.Parent = statsFrame
+
+local helpLabel = Instance.new("TextLabel")
+helpLabel.Name = "HelpLabel"
+helpLabel.AnchorPoint = Vector2.new(0, 0)
+helpLabel.Position = UDim2.fromScale(0.05, 0.86)
+helpLabel.Size = UDim2.fromScale(0.9, 0.10)
+helpLabel.BackgroundTransparency = 1
+helpLabel.Text = "Tip: Use promotions and workers to grow faster."
+helpLabel.TextColor3 = Color3.fromRGB(170, 170, 170)
+helpLabel.Font = Enum.Font.Gotham
+helpLabel.TextScaled = true
+helpLabel.TextWrapped = true
+helpLabel.TextXAlignment = Enum.TextXAlignment.Left
+helpLabel.Parent = statsFrame
+
+local actionFrame = Instance.new("Frame")
+actionFrame.Name = "ActionFrame"
+actionFrame.AnchorPoint = Vector2.new(0.5, 0)
+actionFrame.Position = UDim2.fromScale(0.55, 0.20)
+actionFrame.Size = UDim2.fromScale(0.36, 0.44)
+actionFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 36)
+actionFrame.BorderSizePixel = 0
+actionFrame.Parent = background
+
+local actionCorner = Instance.new("UICorner")
+actionCorner.CornerRadius = UDim.new(0, 16)
+actionCorner.Parent = actionFrame
+
+local actionStroke = Instance.new("UIStroke")
+actionStroke.Color = Color3.fromRGB(72, 72, 84)
+actionStroke.Transparency = 0.75
+actionStroke.Parent = actionFrame
+
+local actionHeader = Instance.new("TextLabel")
+actionHeader.Name = "ActionHeader"
+actionHeader.Size = UDim2.fromScale(0.9, 0.14)
+actionHeader.Position = UDim2.fromScale(0.05, 0.03)
+actionHeader.BackgroundTransparency = 1
+actionHeader.Text = "ACTION"
+actionHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+actionHeader.Font = Enum.Font.GothamBold
+actionHeader.TextScaled = true
+actionHeader.TextXAlignment = Enum.TextXAlignment.Left
+actionHeader.Parent = actionFrame
 
 local workButton = Instance.new("TextButton")
 workButton.Name = "WorkButton"
-workButton.AnchorPoint = Vector2.new(0.5, 0.5)
-workButton.Position = UDim2.fromScale(0.5, 0.55)
-workButton.Size = UDim2.fromScale(0.28, 0.2)
+workButton.AnchorPoint = Vector2.new(0.5, 0)
+workButton.Position = UDim2.fromScale(0.5, 0.18)
+workButton.Size = UDim2.fromScale(0.56, 0.42)
 workButton.BackgroundColor3 = Color3.fromRGB(180, 35, 35)
 workButton.BorderSizePixel = 0
 workButton.Text = "WORK"
 workButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 workButton.Font = Enum.Font.GothamBlack
 workButton.TextScaled = true
-workButton.Parent = background
+workButton.Parent = actionFrame
 
 local workCorner = Instance.new("UICorner")
-workCorner.CornerRadius = UDim.new(1, 0)
+workCorner.CornerRadius = UDim.new(0, 24)
 workCorner.Parent = workButton
+
+local workHintLabel = Instance.new("TextLabel")
+workHintLabel.Name = "WorkHintLabel"
+workHintLabel.AnchorPoint = Vector2.new(0.5, 0)
+workHintLabel.Position = UDim2.fromScale(0.5, 0.66)
+workHintLabel.Size = UDim2.fromScale(0.88, 0.22)
+workHintLabel.BackgroundTransparency = 1
+workHintLabel.Text = "Click WORK to earn money, then upgrade promotions and hiring."
+workHintLabel.TextColor3 = Color3.fromRGB(185, 185, 185)
+workHintLabel.Font = Enum.Font.Gotham
+workHintLabel.TextScaled = true
+workHintLabel.TextWrapped = true
+workHintLabel.Parent = actionFrame
+
+local quickActionsFrame = Instance.new("Frame")
+quickActionsFrame.Name = "QuickActionsFrame"
+quickActionsFrame.AnchorPoint = Vector2.new(0, 0)
+quickActionsFrame.Position = UDim2.fromScale(0.04, 0.67)
+quickActionsFrame.Size = UDim2.fromScale(0.28, 0.26)
+quickActionsFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 36)
+quickActionsFrame.BorderSizePixel = 0
+quickActionsFrame.Parent = background
+
+local quickCorner = Instance.new("UICorner")
+quickCorner.CornerRadius = UDim.new(0, 16)
+quickCorner.Parent = quickActionsFrame
+
+local quickStroke = Instance.new("UIStroke")
+quickStroke.Color = Color3.fromRGB(72, 72, 84)
+quickStroke.Transparency = 0.75
+quickStroke.Parent = quickActionsFrame
+
+local quickHeader = Instance.new("TextLabel")
+quickHeader.Name = "QuickActionsHeader"
+quickHeader.Size = UDim2.fromScale(0.9, 0.14)
+quickHeader.Position = UDim2.fromScale(0.05, 0.03)
+quickHeader.BackgroundTransparency = 1
+quickHeader.Text = "QUICK ACTIONS"
+quickHeader.TextColor3 = Color3.fromRGB(240, 240, 240)
+quickHeader.Font = Enum.Font.GothamBold
+quickHeader.TextScaled = true
+quickHeader.TextXAlignment = Enum.TextXAlignment.Left
+quickHeader.Parent = quickActionsFrame
 
 local promotionButton = Instance.new("TextButton")
 promotionButton.Name = "PromotionsButton"
-promotionButton.AnchorPoint = Vector2.new(0, 0.5)
-promotionButton.Position = UDim2.fromScale(0.08, 0.45)
-promotionButton.Size = UDim2.fromScale(0.16, 0.07)
+promotionButton.AnchorPoint = Vector2.new(0, 0)
+promotionButton.Position = UDim2.fromScale(0.05, 0.20)
+promotionButton.Size = UDim2.fromScale(0.9, 0.18)
 promotionButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 promotionButton.BorderSizePixel = 0
 promotionButton.Text = "Promotions"
-promotionButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+promotionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 promotionButton.Font = Enum.Font.GothamBold
 promotionButton.TextScaled = true
-promotionButton.Parent = background
+promotionButton.Parent = quickActionsFrame
 
 local promotionCorner = Instance.new("UICorner")
-promotionCorner.CornerRadius = UDim.new(0.18, 0)
+promotionCorner.CornerRadius = UDim.new(0, 12)
 promotionCorner.Parent = promotionButton
 
 local hiringButton = Instance.new("TextButton")
 hiringButton.Name = "HiringButton"
-hiringButton.AnchorPoint = Vector2.new(0, 0.5)
-hiringButton.Position = UDim2.fromScale(0.08, 0.56)
-hiringButton.Size = UDim2.fromScale(0.16, 0.07)
+hiringButton.AnchorPoint = Vector2.new(0, 0)
+hiringButton.Position = UDim2.fromScale(0.05, 0.44)
+hiringButton.Size = UDim2.fromScale(0.9, 0.18)
 hiringButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 hiringButton.BorderSizePixel = 0
 hiringButton.Text = "Hiring"
-hiringButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+hiringButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 hiringButton.Font = Enum.Font.GothamBold
 hiringButton.TextScaled = true
-hiringButton.Parent = background
+hiringButton.Parent = quickActionsFrame
 
 local hiringCorner = Instance.new("UICorner")
-hiringCorner.CornerRadius = UDim.new(0.18, 0)
+hiringCorner.CornerRadius = UDim.new(0, 12)
 hiringCorner.Parent = hiringButton
 
 local rebirthButton = Instance.new("TextButton")
 rebirthButton.Name = "RebirthToggleButton"
-rebirthButton.AnchorPoint = Vector2.new(0, 0.5)
-rebirthButton.Position = UDim2.fromScale(0.08, 0.67)
-rebirthButton.Size = UDim2.fromScale(0.16, 0.07)
+rebirthButton.AnchorPoint = Vector2.new(0, 0)
+rebirthButton.Position = UDim2.fromScale(0.05, 0.68)
+rebirthButton.Size = UDim2.fromScale(0.9, 0.18)
 rebirthButton.BackgroundColor3 = Color3.fromRGB(45, 48, 58)
 rebirthButton.BorderSizePixel = 0
 rebirthButton.Text = "Rebirth"
-rebirthButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+rebirthButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 rebirthButton.Font = Enum.Font.GothamBold
 rebirthButton.TextScaled = true
-rebirthButton.Parent = background
+rebirthButton.Parent = quickActionsFrame
 
 local rebirthCorner = Instance.new("UICorner")
-rebirthCorner.CornerRadius = UDim.new(0.18, 0)
+rebirthCorner.CornerRadius = UDim.new(0, 12)
 rebirthCorner.Parent = rebirthButton
 
 WorkController.Init({
@@ -475,6 +647,7 @@ HiringController.Init({
     WorkerIncomeLabel = workerIncome,
     BuyWorkerButton = buyWorkerButton,
     AffordabilityLabel = affordabilityLabel,
+    PassiveIncomeLabel = passiveIncomeLabel,
     CloseButton = hiringClose,
 })
 
@@ -484,6 +657,8 @@ RebirthController.Init({
     PrestigeLabel = prestigeLabel,
     RequirementLabel = requirementLabel,
     DescriptionLabel = descriptionLabel,
+    PrestigeStatusLabel = prestigeStatusLabel,
+    RebirthStatusLabel = rebirthStatusLabel,
     RebirthButton = rebirthConfirmButton,
     CloseButton = rebirthClose,
 })
